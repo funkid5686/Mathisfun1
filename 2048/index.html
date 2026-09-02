@@ -765,9 +765,31 @@ hr {
     margin-top: 90px !important; }
   .game-message .lower {
     margin-top: 30px !important; } }
+.home-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #6c2cff;
+  color: white;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  z-index: 1000;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.home-button:hover {
+  background: #5520cc;
+  transform: translateY(-2px);
+}
+
 </style>
 </head>
 <body>
+	<a href="../index.html" class="home-button">MathisFun</a>
+
   <div class="container">
     <div class="heading">
       <h1 class="title">2048</h1>
