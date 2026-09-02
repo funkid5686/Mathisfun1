@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathisFun - 2048</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #10131a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 48px;
+    color: #f2b179;
+}
+
+.score {
+    background: #1c2130;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.score span {
+    display: block;
+    color: #aaa;
+    font-size: 12px;
+}
+
+button,
+.home {
+    border: none;
+    background: #6c2cff;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px;
+}
+
+button:hover,
+.home:hover {
+    background: #5420c9;
+}
+
+.board {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #bbada0;
+    border-radius: 12px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    touch-action: none;
+}
+
+.tile {
+    background: #cdc1b4;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(25px, 8vw, 45px);
+    font-weight: bold;
+    color: #776e65;
+}
+
+.tile-2 { background: #eee4da; }
+.tile-4 { background: #ede0c8; }
+.tile-8 { background: #f2b179; color: white; }
+.tile-16 { background: #f59563; color: white; }
+.tile-32 { background: #f67c5f; color: white; }
+.tile-64 { background: #f65e3b; color: white; }
+.tile-128 { background: #edcf72; color: white; }
+.tile-256 { background: #edcc61; color: white; }
+.tile-512 { background: #edc850; color: white; }
+.tile-1024 { background: #edc53f; color: white; }
+.tile-2048 { background: #edc22e; color: white; }
+
+.message {
+    min-height: 30px;
+    margin-top: 18px;
+    font-weight: bold;
+    color: #00c6ff;
+}
+
+.instructions {
+    color: #aaa;
+    line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+        <h1>2048</h1>
+
+        <div class="score">
+            <span>SCORE</span>
+            <strong id="score">0</strong>
+        </div>
+    </div>
+
+    <div>
+        <button onclick="newGame()">NEW GAME</button>
+        <a class="home" href="../index.html">GAME HUB</a>
+    </div>
+
+    <div id="board" class="board"></div>
+
+    <div id="message" class="message"></div>
+
+    <p class="instructions">
+        Use the <strong>arrow keys</strong> to move the tiles.<br>
+        On mobile, swipe in any direction.
+    </p>
+
+</div>
+
+<script>
+
+const boardElement = document.getElementById("board");
+const scoreElement = document.getElementById("score");
+const messageElement = document.getElementById("message");
+
+let board = [];
+let score = 0;
+
+function newGame() {
+
+    board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ];
+
+    score = 0;
+    messageElement.textContent = "";
+
+    addRandomTile();
+    addRandomTile();
+
+    updateBoard();
+}
+
+function addRandomTile() {
+
+    const empty = [];
+
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 4; col++) {
+
+            if (board[row][col] === 0) {
+                empty.push({ row, col });
+            }
+
+        }
+    }
+
+    if (empty.length === 0) return;
+
+    const spot = empty[Math.floor(Math.random() * empty.length)];
+
+    board[spot.row][spot.col] =
+        Math.random() < 0.9 ? 2 : 4;
+}
+
+function updateBoard() {
+
+    boardElement.innerHTML = "";
+
+    for (let row = 0; row < 4; row++) {
+
+        for (let col = 0; col < 4; col++) {
+
+            const tile = document.createElement("div");
+
+            tile.className = "tile";
+
+            const value = board[row][col];
+
+            if (value !== 0) {
+                tile.textContent = value;
+                tile.classList.add("tile-" + value);
+            }
+
+            boardElement.appendChild(tile);
+        }
+    }
+
+    scoreElement.textContent = score;
+}
+
+function slide(row) {
+
+    let filtered = row.filter(value => value !== 0);
+
+    for (let i = 0; i < filtered.length - 1; i++) {
+
+        if (filtered[i] === filtered[i + 1]) {
+
+            filtered[i] *= 2;
+
+            score += filtered[i];
+
+            filtered[i + 1] = 0;
+        }
+    }
+
+    filtered = filtered.filter(value => value !== 0);
+
+    while (filtered.length < 4) {
+        filtered.push(0);
+    }
+
+    return filtered;
+}
+
+function moveLeft() {
+
+    let changed = false;
+
+    for (let row = 0; row < 4; row++) {
+
+        const oldRow = [...board[row]];
+
+        const newRow = slide(board[row]);
+
+        board[row] = newRow;
+
+        if (JSON.stringify(oldRow) !== JSON.stringify(newRow)) {
+            changed = true;
+        }
+    }
+
+    return changed;
+}
+
+function moveRight() {
+
+    let changed = false;
+
+    for (let row = 0; row < 4; row++) {
+
+        const oldRow = [...board[row]];
+
+        const reversed = [...board[row]].reverse();
+
+        const newRow = slide(reversed).reverse();
+
+        board[row] = newRow;
+
+        if (JSON.stringify(oldRow) !== JSON.stringify(newRow)) {
+            changed = true;
+        }
+    }
+
+    return changed;
+}
+
+function moveUp() {
+
+    let changed = false;
+
+    for (let col = 0; col < 4; col++) {
+
+        const column = [];
+
+        for (let row = 0; row < 4; row++) {
+            column.push(board[row][col]);
+        }
+
+        const oldColumn = [...column];
+
+        const newColumn = slide(column);
+
+        for (let row = 0; row < 4; row++) {
+            board[row][col] = newColumn[row];
+        }
+
+        if (JSON.stringify(oldColumn) !== JSON.stringify(newColumn)) {
+            changed = true;
+        }
+    }
+
+    return changed;
+}
+
+function moveDown() {
+
+    let changed = false;
+
+    for (let col = 0; col < 4; col++) {
+
+        const column = [];
+
+        for (let row = 0; row < 4; row++) {
+            column.push(board[row][col]);
+        }
+
+        const oldColumn = [...column];
+
+        const newColumn =
+            slide(column.reverse()).reverse();
+
+        for (let row = 0; row < 4; row++) {
+            board[row][col] = newColumn[row];
+        }
+
+        if (JSON.stringify(oldColumn) !== JSON.stringify(newColumn)) {
+            changed = true;
+        }
+    }
+
+    return changed;
+}
+
+function canMove() {
+
+    for (let row = 0; row < 4; row++) {
+
+        for (let col = 0; col < 4; col++) {
+
+            if (board[row][col] === 0) {
+                return true;
+            }
+
+            if (
+                col < 3 &&
+                board[row][col] === board[row][col + 1]
+            ) {
+                return true;
+            }
+
+            if (
+                row < 3 &&
+                board[row][col] === board[row + 1][col]
+            ) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function checkWin() {
+
+    for (let row = 0; row < 4; row++) {
+
+        for (let col = 0; col < 4; col++) {
+
+            if (board[row][col] === 2048) {
+
+                messageElement.textContent =
+                    "🎉 You reached 2048! Keep going!";
+
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function makeMove(direction) {
+
+    let changed = false;
+
+    if (direction === "left") {
+        changed = moveLeft();
+    }
+
+    if (direction === "right") {
+        changed = moveRight();
+    }
+
+    if (direction === "up") {
+        changed = moveUp();
+    }
+
+    if (direction === "down") {
+        changed = moveDown();
+    }
+
+    if (changed) {
+
+        addRandomTile();
+
+        updateBoard();
+
+        checkWin();
+
+        if (!canMove()) {
+
+            messageElement.textContent =
+                "Game Over! 😢 Press NEW GAME to try again.";
+        }
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (
+        [
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight"
+        ].includes(event.key)
+    ) {
+        event.preventDefault();
+    }
+
+    if (event.key === "ArrowLeft") {
+        makeMove("left");
+    }
+
+    if (event.key === "ArrowRight") {
+        makeMove("right");
+    }
+
+    if (event.key === "ArrowUp") {
+        makeMove("up");
+    }
+
+    if (event.key === "ArrowDown") {
+        makeMove("down");
+    }
+});
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+boardElement.addEventListener("touchstart", function(event) {
+
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+
+});
+
+boardElement.addEventListener("touchend", function(event) {
+
+    const touchEndX =
+        event.changedTouches[0].screenX;
+
+    const touchEndY =
+        event.changedTouches[0].screenY;
+
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+
+    if (
+        Math.abs(dx) < 30 &&
+        Math.abs(dy) < 30
+    ) {
+        return;
+    }
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+
+        if (dx > 0) {
+            makeMove("right");
+        } else {
+            makeMove("left");
+        }
+
+    } else {
+
+        if (dy > 0) {
+            makeMove("down");
+        } else {
+            makeMove("up");
+        }
+    }
+});
+
+newGame();
+
+</script>
+
+</body>
+</html>
