@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathisFun Game Hub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #10131a;
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #6c2cff, #00c6ff);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 48px;
+        }
+
+        header p {
+            font-size: 20px;
+        }
+
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .game {
+            background: #1c2130;
+            border-radius: 15px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .game:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+
+        .game-icon {
+            font-size: 55px;
+        }
+
+        .game h2 {
+            margin: 15px 0;
+        }
+
+        .play {
+            display: inline-block;
+            background: #00c6ff;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .play:hover {
+            background: #008dcc;
+        }
+
+        footer {
+            padding: 25px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🎮 MathisFun Game Hub</h1>
+        <p>Choose a game and have fun!</p>
+    </header>
+
+    <main class="games">
+
+        <div class="game">
+            <div class="game-icon">🧩</div>
+            <h2>2048</h2>
+            <a class="play" href="2048/index.html">PLAY</a>
+        </div>
+
+        <div class="game">
+            <div class="game-icon">🐦</div>
+            <h2>Angry Birds</h2>
+            <a class="play" href="angry-birds/index.html">PLAY</a>
+        </div>
+
+        <div class="game">
+            <div class="game-icon">💥</div>
+            <h2>Awesome Tanks</h2>
+            <a class="play" href="awesome-tanks/index.html">PLAY</a>
+        </div>
+
+        <div class="game">
+            <div class="game-icon">🏎️</div>
+            <h2>Madalin Stunt Cars 2</h2>
+            <a class="play" href="madalin-stunt-cars-2/index.html">PLAY</a>
+        </div>
+
+    </main>
+
+    <footer>
+        © 2026 MathisFun
+    </footer>
+
+</body>
+</html>
