@@ -55,7 +55,18 @@
         }
 
         .game-icon {
-            font-size: 55px;
+            height: 150px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #10131a;
+        }
+
+        .game-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .game h2 {
@@ -93,25 +104,33 @@
     <main class="games">
 
         <div class="game">
-            <div class="game-icon">🧩</div>
+            <div class="game-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/2048_logo.svg" alt="2048 game logo">
+            </div>
             <h2>2048</h2>
             <a class="play" href="2048/index.html">PLAY</a>
         </div>
 
         <div class="game">
-            <div class="game-icon">🐦</div>
+            <div class="game-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Angry_Birds_logo.svg" alt="Angry Birds game logo">
+            </div>
             <h2>Angry Birds</h2>
             <a class="play" href="angry-birds/index.html">PLAY</a>
         </div>
 
         <div class="game">
-            <div class="game-icon">💥</div>
+            <div class="game-icon">
+                <img src="https://www.google.com/s2/favicons?domain=crazygames.com&sz=256" alt="Awesome Tanks game artwork">
+            </div>
             <h2>Awesome Tanks</h2>
             <a class="play" href="awesome-tanks/index.html">PLAY</a>
         </div>
 
         <div class="game">
-            <div class="game-icon">🏎️</div>
+            <div class="game-icon">
+                <img src="https://www.google.com/s2/favicons?domain=madalingames.com&sz=256" alt="Madalin Stunt Cars 2 game artwork">
+            </div>
             <h2>Madalin Stunt Cars 2</h2>
             <a class="play" href="madalin-stunt-cars-2/index.html">PLAY</a>
         </div>
