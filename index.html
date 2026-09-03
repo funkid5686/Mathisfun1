@@ -18,6 +18,50 @@
             text-align: center;
         }
 
+        .home-layout {
+            display: grid;
+            grid-template-columns: 230px minmax(0, 1fr);
+            gap: 0;
+            min-height: calc(100vh - 154px);
+            margin: 0;
+            text-align: left;
+        }
+
+        .game-list {
+            background: #000;
+            border: 4px solid red;
+            padding: 18px 14px;
+        }
+
+        .game-list h2 {
+            margin: 0 0 16px;
+            font-size: 22px;
+            text-align: left;
+        }
+
+        .game-list a {
+            display: block;
+            padding: 9px 2px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .game-list a:hover,
+        .game-list a:focus {
+            color: #00c6ff;
+        }
+
+        .games-panel {
+            min-width: 0;
+            padding: 26px 30px;
+        }
+
+        .games-panel > h2 {
+            margin: 0 0 22px;
+            font-size: 28px;
+        }
+
         header {
             padding: 40px 20px;
             background: linear-gradient(135deg, #6c2cff, #00c6ff);
@@ -36,9 +80,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 25px;
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
         }
 
         .game {
@@ -96,6 +139,25 @@
             padding: 25px;
             color: #888;
         }
+
+        @media (max-width: 700px) {
+            .home-layout {
+                display: block;
+            }
+
+            .game-list {
+                border-width: 3px;
+            }
+
+            .game-list a {
+                display: inline-block;
+                margin-right: 16px;
+            }
+
+            .games-panel {
+                padding: 24px 16px;
+            }
+        }
     </style>
 </head>
 
@@ -106,9 +168,20 @@
         <p>Choose a game and have fun!</p>
     </header>
 
-    <main class="games">
+    <div class="home-layout">
+        <aside class="game-list" aria-label="Game list">
+            <h2>Games</h2>
+            <a href="2048/index.html">2048</a>
+            <a href="angry-birds/index.html">Angry Birds</a>
+            <a href="awesome-tanks/index.html">Awesome Tanks</a>
+            <a href="madalin-stunt-cars-2/index.html">Madalin Stunt Cars 2</a>
+        </aside>
 
-        <div class="game">
+        <main class="games-panel">
+            <h2>Choose a game and have fun!</h2>
+            <div class="games">
+
+        <div class="game" id="game-2048">
             <div class="game-icon">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/2048_logo.svg" alt="2048 game logo">
             </div>
@@ -116,7 +189,7 @@
             <a class="play" href="2048/index.html">PLAY</a>
         </div>
 
-        <div class="game">
+        <div class="game" id="game-angry-birds">
             <div class="game-icon">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Angry_Birds_logo.svg" alt="Angry Birds game logo">
             </div>
@@ -124,7 +197,7 @@
             <a class="play" href="angry-birds/index.html">PLAY</a>
         </div>
 
-        <div class="game">
+        <div class="game" id="game-awesome-tanks">
             <div class="game-icon cover">
                 <img src="assets/awesome-tanks.jpg" alt="Awesome Tanks game artwork">
             </div>
@@ -132,7 +205,7 @@
             <a class="play" href="awesome-tanks/index.html">PLAY</a>
         </div>
 
-        <div class="game">
+        <div class="game" id="game-madalin-stunt-cars">
             <div class="game-icon cover">
                 <img src="assets/madalin-stunt-cars.jpg" alt="Sports car for Madalin Stunt Cars 2">
             </div>
@@ -140,7 +213,9 @@
             <a class="play" href="madalin-stunt-cars-2/index.html">PLAY</a>
         </div>
 
-    </main>
+            </div>
+        </main>
+    </div>
 
     <footer>
         © 2026 MathisFun
